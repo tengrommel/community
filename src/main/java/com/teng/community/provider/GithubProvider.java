@@ -18,7 +18,8 @@ public class GithubProvider {
 				.url("https://github.com/login/oauth/access_token")
 				.post(body)
 				.build();
-		try (Response response = client.newCall(request).execute()) {
+		try{
+			Response response = client.newCall(request).execute();
 			String string = response.body().string();
 			return string.split("&")[0].split("=")[1];
 		}catch (Exception e) {
@@ -34,8 +35,7 @@ public class GithubProvider {
 		try {
 			Response response = client.newCall(request).execute();
 			String string = response.body().string();
-			GithubUser githubUser = JSON.parseObject(string, GithubUser.class);
-			return githubUser;
+			return JSON.parseObject(string, GithubUser.class);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
